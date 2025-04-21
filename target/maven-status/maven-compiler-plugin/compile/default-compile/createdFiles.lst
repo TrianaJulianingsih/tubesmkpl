@@ -1,0 +1,13 @@
+com\HappyFresh\Seller.class
+com\HappyFresh\DriverMenu.class
+com\HappyFresh\RegisterMenu.class
+com\HappyFresh\BuyerMenu.class
+com\HappyFresh\Buyer.class
+com\HappyFresh\HappyFresh.class
+com\HappyFresh\User.class
+com\HappyFresh\InterfaceHF.class
+com\HappyFresh\Product.class
+com\HappyFresh\NegativeValueException.class
+com\HappyFresh\Driver.class
+com\HappyFresh\SellerMenu.class
+com\HappyFresh\LoginMenu.class
