@@ -40,3 +40,26 @@ jobs:
 
       - name: Run Automated Tests
         run: mvn test
+
+  code-scan:
+    name: 3. Continuous Inspection (Code Scan)
+    needs: test
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+      actions: read
+      contents: read
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: 'java'
+
+      - name: Autobuild for CodeQL
+        uses: github/codeql-action/autobuild@v3
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
