@@ -66,12 +66,10 @@ jobs:
 
   deploy:
     name: 4. Continuous Deployment (Deploy)
-    needs: inspect
+    needs: code-scan # <--- Diubah dari 'inspect' menjadi 'code-scan'
     runs-on: ubuntu-latest
     steps:
       - name: Deploy to Production
         run: |
           echo "Triggering deployment..."
           curl -X POST "https://httpbin.org/post"
-
-# coba
