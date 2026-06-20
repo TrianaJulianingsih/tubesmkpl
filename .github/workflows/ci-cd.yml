@@ -85,6 +85,7 @@ jobs:
           settings-path: ${{ github.workspace }}
 
       - name: Publish to GitHub Packages
-        run: mvn deploy -s $GITHUB_WORKSPACE/settings.xml
+        run: mvn --batch-mode deploy -DskipTests -s ${{ github.workspace }}/settings.xml
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_ACTOR: ${{ github.actor }}
