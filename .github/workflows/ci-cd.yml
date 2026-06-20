@@ -71,9 +71,6 @@ jobs:
     needs: code-scan
     runs-on: ubuntu-latest
     if: github.event_name == 'release'
-    permissions:
-      contents: read
-      packages: write
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -83,12 +80,12 @@ jobs:
         with:
           java-version: '23'
           distribution: 'temurin'
-          server-id: github
-          settings-path: ${{ github.workspace }}
 
-      - name: Publish to GitHub Packages
-        run: mvn deploy -s $GITHUB_WORKSPACE/settings.xml
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build JAR
+        run: mvn clean package -DskipTests
 
-          # coba deh
+      - name: Upload JAR Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: HappyFresh-jar
+          path: target/*.jar
