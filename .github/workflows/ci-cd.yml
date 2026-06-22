@@ -79,16 +79,16 @@ jobs:
             -Dsonar.organization=trianajulianingsih \
             -Dsonar.host.url=https://sonarcloud.io
 
-      - name: Initialize CodeQL
-        uses: github/codeql-action/init@v4
-        with:
-          languages: java
+      # - name: Initialize CodeQL
+      #   uses: github/codeql-action/init@v4
+      #   with:
+      #     languages: java
 
-      - name: Autobuild
-        uses: github/codeql-action/autobuild@v4
+      # - name: Autobuild
+      #   uses: github/codeql-action/autobuild@v4
 
-      - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v4
+      # - name: Perform CodeQL Analysis
+      #   uses: github/codeql-action/analyze@v4
 
   deploy:
     name: 4. Continuous Deployment (Deploy)
