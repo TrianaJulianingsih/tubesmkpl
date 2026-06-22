@@ -44,24 +44,73 @@ jobs:
       - name: Run Automated Tests
         run: mvn test
 
+  # code-scan:
+  #   name: 3. Continuous Inspection (Code Scan)
+  #   needs: test
+  #   runs-on: ubuntu-latest
+  #   permissions:
+  #     security-events: write
+  #     actions: read
+  #     contents: read
+  #   steps:
+  #     - name: Checkout Code
+  #       uses: actions/checkout@v4
+
+  #     - name: Initialize CodeQL
+  #       uses: github/codeql-action/init@v4
+  #       with:
+  #         languages: 'java'
+
+  #     - name: Autobuild for CodeQL
+  #       uses: github/codeql-action/autobuild@v4
+
+  #     - name: Perform CodeQL Analysis
+  #       uses: github/codeql-action/analyze@v4
   code-scan:
     name: 3. Continuous Inspection (Code Scan)
     needs: test
     runs-on: ubuntu-latest
+
     permissions:
       security-events: write
       actions: read
       contents: read
+
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up JDK 23
+        uses: actions/setup-java@v4
+        with:
+          java-version: '23'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+
+      - name: Build & Analyze with SonarCloud
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          mvn -B verify sonar:sonar \
+            -Dsonar.projectKey=TrianaJulianingsih_tubesmkpl \
+            -Dsonar.organization=trianajulianingsih \
+            -Dsonar.host.url=https://sonarcloud.io
 
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v4
         with:
-          languages: 'java'
+          languages: java
 
-      - name: Autobuild for CodeQL
+      - name: Autobuild
         uses: github/codeql-action/autobuild@v4
 
       - name: Perform CodeQL Analysis
